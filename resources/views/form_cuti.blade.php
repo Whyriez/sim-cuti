@@ -153,6 +153,29 @@
                 <label>Masa Kerja</label>
                 <input type="text" id="masa_kerja" class="form-control" readonly>
             </div>
+            <div class="section-divider mt-4"></div>
+            <div class="section-title">
+                <i class="fas fa-user-check me-2"></i> Data Atasan Langsung
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>Nama Atasan</label>
+                    <input type="text" id="nama_atasan_display" class="form-control bg-light" readonly placeholder="-">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>NIP Atasan</label>
+                    <input type="text" id="nip_atasan_display" class="form-control bg-light" readonly placeholder="-">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label>Jabatan Atasan</label>
+                    <input type="text" id="jabatan_atasan_display" class="form-control bg-light" readonly placeholder="-">
+                </div>
+            </div>
+
+            <input type="hidden" name="nama_atasan_langsung" id="nama_atasan">
+            <input type="hidden" name="nip_atasan_langsung" id="nip_atasan">
+            <input type="hidden" name="jabatan_atasan_langsung" id="jabatan_atasan">
         </div>
 
         <input type="hidden" name="nama_atasan_langsung" id="nama_atasan">
@@ -376,11 +399,29 @@
                 if(response.status === 'success') {
                     let p = response.data;
 
-                    // Isi Form
-                    $('#nama_display').val(p.nama_lengkap.toUpperCase()); // UPPERCASE
+                    // 1. Isi Data Pegawai
+                    $('#nama_display').val(p.nama_lengkap.toUpperCase());
                     $('#jabatan').val(p.jabatan);
                     $('#unit_kerja').val(p.unit_kerja ? p.unit_kerja.nama_unit : '-');
                     $('#masa_kerja').val(p.masa_kerja || '-');
+
+                    // 2. Isi Data Atasan Langsung (DARI RELASI UNIT KERJA)
+                    if(p.unit_kerja) {
+                        // Tampilkan di Input Readonly
+                        $('#nama_atasan_display').val(p.unit_kerja.nama_kepala || '-');
+                        $('#nip_atasan_display').val(p.unit_kerja.nip_kepala || '-');
+                        $('#jabatan_atasan_display').val(p.unit_kerja.jabatan_kepala || '-');
+
+                        // Isi Input Hidden (Opsional)
+                        $('#nama_atasan').val(p.unit_kerja.nama_kepala);
+                        $('#nip_atasan').val(p.unit_kerja.nip_kepala);
+                        $('#jabatan_atasan').val(p.unit_kerja.jabatan_kepala);
+                    } else {
+                        // Jika tidak ada unit kerja
+                        $('#nama_atasan_display').val('Belum diset');
+                        $('#nip_atasan_display').val('-');
+                        $('#jabatan_atasan_display').val('-');
+                    }
 
                     // Simpan Quota Efektif
                     currentQuota = p.quota_tahunan_efektif || 0;
@@ -395,9 +436,13 @@
             error: function() {
                 $('#loading_nip').addClass('d-none');
                 Swal.fire("Gagal", "NIP Tidak Ditemukan", "error");
-                // Reset
+                // Reset Semua Field
                 $('#nama_display').val('');
                 $('#unit_kerja').val('');
+                $('#nama_atasan_display').val(''); // Reset atasan
+                $('#nip_atasan_display').val('');
+                $('#jabatan_atasan_display').val('');
+
                 currentQuota = 0;
                 $('#mulai_tanggal').prop('disabled', true);
             }
