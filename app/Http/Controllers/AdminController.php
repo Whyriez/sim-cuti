@@ -214,6 +214,14 @@ class AdminController extends Controller
         return back()->with('success', 'Unit Kerja berhasil ditambahkan!');
     }
 
+    public function destroyUnitKerja($id)
+    {
+        $unit = UnitKerja::findOrFail($id);
+        $unit->delete();
+
+        return back()->with('success', 'Unit Kerja berhasil dihapus! Pegawai di unit ini sekarang berstatus tanpa unit.');
+    }
+
     public function updateUnitKerja(Request $request, $id)
     {
         $unit = UnitKerja::findOrFail($id);

@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/unit-kerja', [AdminController::class, 'indexUnitKerja'])->name('unit-kerja.index');
     Route::post('/unit-kerja/store', [AdminController::class, 'storeUnitKerja'])->name('unit-kerja.store');
     Route::post('/unit-kerja/{id}/update', [AdminController::class, 'updateUnitKerja'])->name('unit-kerja.update');
+    Route::delete('/unit-kerja/{id}', [AdminController::class, 'destroyUnitKerja'])->name('unit-kerja.destroy');
 
     // CRUD Pegawai
     Route::get('/data-pegawai', [AdminController::class, 'indexPegawai'])->name('pegawai.index');
