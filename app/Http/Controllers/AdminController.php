@@ -194,6 +194,26 @@ class AdminController extends Controller
         return view('admin.unit_kerja', compact('units'));
     }
 
+    public function storeUnitKerja(Request $request)
+    {
+        $request->validate([
+            'nama_unit' => 'required|string|max:255',
+            // Field pejabat opsional, boleh diisi nanti
+            'nama_kepala' => 'nullable|string',
+            'nip_kepala' => 'nullable|string',
+            'jabatan_kepala' => 'nullable|string',
+        ]);
+
+        UnitKerja::create([
+            'nama_unit' => $request->nama_unit,
+            'nama_kepala' => $request->nama_kepala,
+            'nip_kepala' => $request->nip_kepala,
+            'jabatan_kepala' => $request->jabatan_kepala,
+        ]);
+
+        return back()->with('success', 'Unit Kerja berhasil ditambahkan!');
+    }
+
     public function updateUnitKerja(Request $request, $id)
     {
         $unit = UnitKerja::findOrFail($id);

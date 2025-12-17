@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     // -- MENU BARU --
     // Unit Kerja
     Route::get('/unit-kerja', [AdminController::class, 'indexUnitKerja'])->name('unit-kerja.index');
+    Route::post('/unit-kerja/store', [AdminController::class, 'storeUnitKerja'])->name('unit-kerja.store');
     Route::post('/unit-kerja/{id}/update', [AdminController::class, 'updateUnitKerja'])->name('unit-kerja.update');
 
     // CRUD Pegawai

@@ -123,19 +123,42 @@
                     <h5 class="modal-title fw-bold">Tambah Unit Kerja Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                {{-- <form action="{{ route('unit-kerja.store') }}" method="POST"> --}}
-                <form action="#" method="POST" onsubmit="alert('Fitur tambah unit manual belum diaktifkan di Controller. Gunakan Import CSV untuk otomatis menambah unit.'); return false;">
+
+                <form action="{{ route('unit-kerja.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Nama Unit Kerja</label>
-                            <input type="text" name="nama_unit" class="form-control" required>
+                        <div class="alert alert-info border mb-3">
+                            <small class="d-block"><i class="fas fa-info-circle me-1"></i> Masukkan nama unit kerja. Data pejabat bisa diisi sekarang atau menyusul.</small>
                         </div>
-                        <p class="text-muted small">Untuk saat ini, Unit Kerja otomatis bertambah saat Anda melakukan <b>Import Pegawai</b> via CSV.</p>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-uppercase text-muted">Nama Unit Kerja <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fas fa-building"></i></span>
+                                <input type="text" name="nama_unit" class="form-control" required placeholder="Contoh: Tata Usaha / Madrasah...">
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+                        <p class="small text-muted fw-bold mb-3">Data Kepala Unit (Opsional)</p>
+
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Nama Pejabat</label>
+                            <input type="text" name="nama_kepala" class="form-control" placeholder="Nama Lengkap & Gelar">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">NIP</label>
+                            <input type="text" name="nip_kepala" class="form-control" placeholder="NIP Pejabat">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Jabatan</label>
+                            <input type="text" name="jabatan_kepala" class="form-control" placeholder="Contoh: Kepala Madrasah">
+                        </div>
+
                     </div>
                     <div class="modal-footer border-0">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary px-4">Simpan Data</button>
                     </div>
                 </form>
             </div>
