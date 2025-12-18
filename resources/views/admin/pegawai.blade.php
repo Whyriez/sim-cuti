@@ -99,21 +99,37 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="small text-muted mb-1">Telepon</label>
-                                                    <input type="text" name="telepon" class="form-control" value="{{ $p->telepon }}">
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="small text-muted mb-1">Sisa Cuti (N)</label>
-                                                    <input type="number" name="sisa_cuti_n" class="form-control" value="{{ $p->sisa_cuti_n }}">
-                                                </div>
+                                            <div class="mb-3">
+                                                <label class="small text-muted mb-1">Telepon</label>
+                                                <input type="text" name="telepon" class="form-control" value="{{ $p->telepon }}">
                                             </div>
 
                                             <div class="mb-3">
                                                 <label class="small text-muted mb-1">Alamat</label>
                                                 <textarea name="alamat" class="form-control" rows="2">{{ $p->alamat }}</textarea>
                                             </div>
+
+                                            <div class="p-3 bg-light border rounded mb-3">
+                                                <label class="fw-bold text-primary mb-2" style="font-size: 0.9rem;">
+                                                    <i class="fas fa-cog me-1"></i> Konfigurasi Sisa Cuti
+                                                </label>
+                                                <div class="row">
+                                                    <div class="col-md-4 mb-2">
+                                                        <label class="small text-muted mb-1">Tahun Ini (N)</label>
+                                                        <input type="number" name="sisa_cuti_n" class="form-control" value="{{ $p->sisa_cuti_n }}" required>
+                                                    </div>
+                                                    <div class="col-md-4 mb-2">
+                                                        <label class="small text-muted mb-1">Tahun Lalu (N-1)</label>
+                                                        <input type="number" name="sisa_cuti_n_1" class="form-control" value="{{ $p->sisa_cuti_n_1 ?? 0 }}">
+                                                    </div>
+                                                    <div class="col-md-4 mb-2">
+                                                        <label class="small text-muted mb-1">2 Thn Lalu (N-2)</label>
+                                                        <input type="number" name="sisa_cuti_n_2" class="form-control" value="{{ $p->sisa_cuti_n_2 ?? 0 }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                         <div class="modal-footer border-0">
                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
@@ -143,7 +159,15 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">NIP <span class="text-danger">*</span></label>
-                                <input type="number" name="nip" class="form-control" required placeholder="Contoh: 19800101...">
+                                <input type="text"
+                                       name="nip"
+                                       class="form-control"
+                                       required
+                                       placeholder="Contoh: 19800101..."
+                                       maxlength="18"
+                                       inputmode="numeric"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <small class="text-muted">Wajib 18 digit angka</small>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Nama Lengkap <span class="text-danger">*</span></label>
@@ -181,6 +205,28 @@
                         <div class="mb-3">
                             <label class="form-label">Alamat Rumah</label>
                             <textarea name="alamat" class="form-control" rows="2" placeholder="Alamat lengkap pegawai..."></textarea>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-12"><label class="fw-bold text-primary">Konfigurasi Kuota Cuti</label></div>
+
+                            <div class="col-md-4">
+                                <label>Sisa N (Tahun Ini)</label>
+                                <input type="number" name="sisa_cuti_n" id="edit_sisa_n" class="form-control" value="12" required>
+                                <small class="text-muted">Default: 12</small>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Sisa N-1 (Thn Lalu)</label>
+                                <input type="number" name="sisa_cuti_n_1" id="edit_sisa_n1" class="form-control" value="0">
+                                <small class="text-muted">Sisa tahun lalu</small>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Sisa N-2 (2 Thn Lalu)</label>
+                                <input type="number" name="sisa_cuti_n_2" id="edit_sisa_n2" class="form-control" value="0">
+                                <small class="text-muted">Sisa 2 tahun lalu</small>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer border-0">

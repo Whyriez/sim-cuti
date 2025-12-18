@@ -128,12 +128,23 @@
             <label>Nomor Induk Pegawai (NIP)</label>
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                <input type="text" name="nip" id="nip" class="form-control" placeholder="Masukkan NIP" required>
+                <input type="text"
+                       name="nip"
+                       id="nip"
+                       class="form-control"
+                       placeholder="Masukkan NIP"
+                       required
+                       maxlength="18"
+                       inputmode="numeric"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 <button type="button" class="btn btn-secondary" onclick="cekNip()">
                     <i class="fas fa-search"></i> Cek Data
                 </button>
             </div>
-            <div id="loading_nip" class="text-primary mt-2 d-none"><small><i class="fas fa-spinner fa-spin"></i> Mencari data...</small></div>
+            <div id="loading_nip" class="text-primary mt-2 d-none">
+                <small><i class="fas fa-spinner fa-spin"></i> Mencari data...</small>
+            </div>
+            <small class="text-muted ms-1">* Masukkan 18 digit NIP tanpa spasi</small>
         </div>
 
         <div class="row">
@@ -188,9 +199,23 @@
         </div>
 
         <div class="alert alert-warning d-none" id="quota_warning">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            <strong>Perhatian:</strong> Sisa Kuota Cuti Tahunan Anda: <span id="sisa_quota_text" class="fw-bold">0</span> Hari.
-            <br><small class="text-muted">(Hari Sabtu & Minggu tidak akan mengurangi kuota)</small>
+            <div class="d-flex">
+                <div class="me-3 mt-1">
+                    <i class="fas fa-exclamation-triangle fa-2x"></i>
+                </div>
+                <div>
+                    <strong>Sisa Kuota Cuti Tahunan Anda:</strong>
+                    <ul class="mb-1 ps-3 mt-1" style="list-style-type: circle;">
+                        <li>N (Tahun Ini) : <span id="val_n" class="fw-bold">0</span> hari</li>
+                        <li>N-1 (Tahun Lalu) : <span id="val_n1" class="fw-bold">0</span> hari</li>
+                        <li>N-2 (2 Tahun Lalu) : <span id="val_n2" class="fw-bold">0</span> hari</li>
+                    </ul>
+                    <div class="mt-1">
+                        Total Sisa: <span id="sisa_quota_text" class="fw-bold text-danger" style="font-size: 1.1em;">0</span> Hari
+                    </div>
+                    <small class="text-muted d-block mt-1">(Hari Sabtu & Minggu tidak akan mengurangi kuota)</small>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -405,6 +430,8 @@
                     $('#unit_kerja').val(p.unit_kerja ? p.unit_kerja.nama_unit : '-');
                     $('#masa_kerja').val(p.masa_kerja || '-');
 
+
+
                     // 2. Isi Data Atasan Langsung (DARI RELASI UNIT KERJA)
                     if(p.unit_kerja) {
                         // Tampilkan di Input Readonly
@@ -426,9 +453,21 @@
                     // Simpan Quota Efektif
                     currentQuota = p.quota_tahunan_efektif || 0;
 
+                    if (p.rincian_quota) {
+                        $('#val_n').text(p.rincian_quota.n);
+                        $('#val_n1').text(p.rincian_quota.n1);
+                        $('#val_n2').text(p.rincian_quota.n2);
+                    }
+
+                    // Update Text Total
+                    $("#sisa_quota_text").text(currentQuota);
+                    $("#sisa_cuti").val(currentQuota + " Hari");
+
                     // Buka Akses Tanggal
                     $('#mulai_tanggal').prop('disabled', false);
                     $('#sampai_tanggal').prop('disabled', false);
+
+                    $("#jenis_cuti").trigger('change');
 
                     Swal.fire({ icon: 'success', title: 'Data Ditemukan', timer: 1000, showConfirmButton: false });
                 }

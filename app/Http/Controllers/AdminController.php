@@ -252,10 +252,16 @@ class AdminController extends Controller
 
     public function storePegawai(Request $request)
     {
+        // Validasi
         $request->validate([
-            'nip' => 'required|numeric|unique:pegawais,nip',
+            'nip' => 'required|unique:pegawais,nip',
             'nama_lengkap' => 'required',
-            // Field lain nullable, jadi tidak wajib validasi ketat
+            'jabatan' => 'required',
+            'unit_kerja_id' => 'nullable',
+            // Tambahkan validasi numeric
+            'sisa_cuti_n' => 'required|numeric',
+            'sisa_cuti_n_1' => 'nullable|numeric',
+            'sisa_cuti_n_2' => 'nullable|numeric',
         ]);
 
         Pegawai::create([
@@ -263,32 +269,45 @@ class AdminController extends Controller
             'nama_lengkap' => $request->nama_lengkap,
             'jabatan' => $request->jabatan,
             'unit_kerja_id' => $request->unit_kerja_id,
-            'masa_kerja' => $request->masa_kerja, // Tambahan
-            'telepon' => $request->telepon,       // Tambahan
-            'alamat' => $request->alamat,         // Tambahan
-            'sisa_cuti_n' => 12,   // Default tahun ini
-            'sisa_cuti_n_1' => 0,  // Default tahun lalu
-            'sisa_cuti_n_2' => 0   // Default 2 tahun lalu
+            'telepon' => $request->telepon,
+            'alamat' => $request->alamat,
+
+            // SIMPAN DATA CUTI
+            'sisa_cuti_n' => $request->sisa_cuti_n,
+            'sisa_cuti_n_1' => $request->sisa_cuti_n_1 ?? 0,
+            'sisa_cuti_n_2' => $request->sisa_cuti_n_2 ?? 0,
         ]);
 
-        return back()->with('success', 'Pegawai berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Data Pegawai berhasil ditambahkan');
     }
 
     public function updatePegawai(Request $request, $id)
     {
-        $pegawai = Pegawai::findOrFail($id);
+        $pegawai = Pegawai::where('nip', $id)->firstOrFail();
+
+        $request->validate([
+            'nama_lengkap' => 'required',
+            'jabatan' => 'required',
+            // Tambahkan validasi numeric
+            'sisa_cuti_n' => 'required|numeric',
+            'sisa_cuti_n_1' => 'nullable|numeric',
+            'sisa_cuti_n_2' => 'nullable|numeric',
+        ]);
 
         $pegawai->update([
             'nama_lengkap' => $request->nama_lengkap,
             'jabatan' => $request->jabatan,
             'unit_kerja_id' => $request->unit_kerja_id,
-            'masa_kerja' => $request->masa_kerja, // Tambahan
-            'telepon' => $request->telepon,       // Tambahan
-            'alamat' => $request->alamat,         // Tambahan
-            'sisa_cuti_n' => $request->sisa_cuti_n
+            'telepon' => $request->telepon,
+            'alamat' => $request->alamat,
+
+            // UPDATE DATA CUTI
+            'sisa_cuti_n' => $request->sisa_cuti_n,
+            'sisa_cuti_n_1' => $request->sisa_cuti_n_1 ?? 0,
+            'sisa_cuti_n_2' => $request->sisa_cuti_n_2 ?? 0,
         ]);
 
-        return back()->with('success', 'Data pegawai diperbarui');
+        return redirect()->back()->with('success', 'Data Pegawai berhasil diperbarui');
     }
 
     public function destroyPegawai($id)
