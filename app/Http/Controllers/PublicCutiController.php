@@ -31,7 +31,7 @@ class PublicCutiController extends Controller
             $sisaN = $pegawai->sisa_cuti_n;
 
             // Sisa N-1 (Tahun Lalu) - Dibagi 2 (Hangus setengah)
-            $sisaN1 = floor($pegawai->sisa_cuti_n_1 / 2);
+            $sisaN1 = $pegawai->sisa_cuti_n_1;
 
             // Sisa N-2 (2 Tahun Lalu) - Diambil dari DB
             $sisaN2 = $pegawai->sisa_cuti_n_2;

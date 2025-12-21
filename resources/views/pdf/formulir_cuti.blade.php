@@ -83,31 +83,31 @@
     <tr>
         <td width="40%">1. Cuti Tahunan</td>
         <td width="10%" class="text-center">
-            @if($cuti->jenis_cuti == 'Cuti Tahunan') <span class="text-bold">V</span> @endif
+{{--            @if($cuti->jenis_cuti == 'Cuti Tahunan') <span class="text-bold">V</span> @endif--}}
         </td>
         <td width="40%">2. Cuti Besar</td>
         <td width="10%" class="text-center">
-            @if($cuti->jenis_cuti == 'Cuti Besar') <span class="text-bold">V</span> @endif
+{{--            @if($cuti->jenis_cuti == 'Cuti Besar') <span class="text-bold">V</span> @endif--}}
         </td>
     </tr>
     <tr>
         <td>3. Cuti Sakit</td>
         <td class="text-center">
-            @if($cuti->jenis_cuti == 'Cuti Sakit') <span class="text-bold">V</span> @endif
+{{--            @if($cuti->jenis_cuti == 'Cuti Sakit') <span class="text-bold">V</span> @endif--}}
         </td>
         <td>4. Cuti Melahirkan</td>
         <td class="text-center">
-            @if($cuti->jenis_cuti == 'Cuti Melahirkan') <span class="text-bold">V</span> @endif
+{{--            @if($cuti->jenis_cuti == 'Cuti Melahirkan') <span class="text-bold">V</span> @endif--}}
         </td>
     </tr>
     <tr>
         <td>5. Cuti Karena Alasan Penting</td>
         <td class="text-center">
-            @if($cuti->jenis_cuti == 'Cuti Alasan Penting') <span class="text-bold">V</span> @endif
+{{--            @if($cuti->jenis_cuti == 'Cuti Alasan Penting') <span class="text-bold">V</span> @endif--}}
         </td>
         <td>6. Cuti di Luar Tanggungan Negara</td>
         <td class="text-center">
-            @if($cuti->jenis_cuti == 'Cuti di Luar Tanggungan Negara') <span class="text-bold">V</span> @endif
+{{--            @if($cuti->jenis_cuti == 'Cuti di Luar Tanggungan Negara') <span class="text-bold">V</span> @endif--}}
         </td>
     </tr>
 </table>
@@ -212,16 +212,17 @@
     </tr>
     <tr>
         <td class="text-center">
-            @if($cuti->status == 'disetujui' && $cuti->keputusan_pejabat == 'DISETUJUI') V @endif
+            <br>
+{{--            @if($cuti->status == 'disetujui' && $cuti->keputusan_pejabat == 'DISETUJUI') V @endif--}}
         </td>
         <td class="text-center">
-            @if($cuti->keputusan_pejabat == 'PERUBAHAN') V @endif
+{{--            @if($cuti->keputusan_pejabat == 'PERUBAHAN') V @endif--}}
         </td>
         <td class="text-center">
-            @if($cuti->keputusan_pejabat == 'DITANGGUHKAN') V @endif
+{{--            @if($cuti->keputusan_pejabat == 'DITANGGUHKAN') V @endif--}}
         </td>
         <td class="text-center">
-            @if($cuti->status == 'ditolak' || $cuti->keputusan_pejabat == 'TIDAK DISETUJUI') V @endif
+{{--            @if($cuti->status == 'ditolak' || $cuti->keputusan_pejabat == 'TIDAK DISETUJUI') V @endif--}}
         </td>
     </tr>
     <tr>
@@ -252,12 +253,13 @@
     </tr>
     <tr>
         <td class="text-center">
-            @if($cuti->status == 'disetujui') V @endif
+            <br>
+{{--            @if($cuti->status == 'disetujui') V @endif--}}
         </td>
         <td class="text-center"></td>
         <td class="text-center"></td>
         <td class="text-center">
-            @if($cuti->status == 'ditolak') V @endif
+{{--            @if($cuti->status == 'ditolak') V @endif--}}
         </td>
     </tr>
     <tr>

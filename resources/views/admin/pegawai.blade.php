@@ -84,7 +84,7 @@
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <label class="small text-muted mb-1">Unit Kerja</label>
-                                                    <select name="unit_kerja_id" class="form-select">
+                                                    <select name="unit_kerja_id" class="form-select select2-edit" style="width: 100%">
                                                         <option value="">-- Pilih Unit --</option>
                                                         @foreach(\App\Models\UnitKerja::all() as $u)
                                                             <option value="{{ $u->id }}" {{ $p->unit_kerja_id == $u->id ? 'selected' : '' }}>
@@ -182,7 +182,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Unit Kerja</label>
-                                <select name="unit_kerja_id" class="form-select">
+                                <select name="unit_kerja_id" class="form-select select2-create" style="width: 100%">
                                     <option value="">-- Pilih Unit --</option>
                                     @foreach(\App\Models\UnitKerja::all() as $u)
                                         <option value="{{ $u->id }}">{{ $u->nama_unit }}</option>
@@ -263,4 +263,28 @@
             </form>
         </div>
     </div>
+
+
+    <script>
+        $(document).ready(function() {
+            // 1. Inisialisasi untuk Modal Tambah
+            $('.select2-create').select2({
+                theme: 'bootstrap-5',
+                dropdownParent: $('#modalCreate'),
+                placeholder: '-- Pilih Unit Kerja --',
+                allowClear: true
+            });
+
+            // 2. Inisialisasi untuk Modal Edit (Looping)
+            // Kita loop setiap elemen agar dropdownParent-nya sesuai dengan modal masing-masing
+            $('.select2-edit').each(function() {
+                $(this).select2({
+                    theme: 'bootstrap-5',
+                    dropdownParent: $(this).closest('.modal'),
+                    placeholder: '-- Pilih Unit Kerja --',
+                    allowClear: true
+                });
+            });
+        });
+    </script>
 @endsection
